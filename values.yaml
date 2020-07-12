@@ -1,0 +1,22 @@
+octopus:
+  # The Octopus server image. Visit https://hub.docker.com/r/octopusdeploy/octopusdeploy for the available versions.
+  image: octopusdeploy/octopusdeploy-prerelease:2020.3.0-beta1789.linux
+  # Set this to 1 if you do not have a HA license.
+  replicaCount: 2
+  # The Octopus admin username
+  username: admin
+  # The Octopus admin password
+  password: Password01!
+  # The Octopus admin email
+  email: admin@example.org
+  # Change this, as it is used to encrypt secrets
+  masterKey: 6EdU6IWsCtMEwk0kPKflQQ==
+  # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
+  acceptEula: "Y"
+  # Use the MS SQL server defined below
+  connectionString: Server=mssql,1433;Database=Octopus;User Id=SA;Password=Password01!
+
+mssql:
+  # If enabled, a simple MS SQL server will be deployed. Note that this server is not production ready, as it
+  # uses ephemeral storage and easily guessed credentials.
+  enabled: true

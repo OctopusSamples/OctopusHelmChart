@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: octopus-web
+spec:
+  type: LoadBalancer
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: octopus
+{{- range untilStep 0 (.Values.octopus.replicaCount | int) 1 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: octopus-{{ . }}
+spec:
+  type: LoadBalancer
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+    - name: tentacle
+      port: 10943
+      targetPort: 10943
+      protocol: TCP
+  selector:
+    statefulset.kubernetes.io/pod-name: octopus-{{ . }}
+{{- end }}

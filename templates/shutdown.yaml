@@ -1,0 +1,23 @@
+# We need to ensure all Octopus pods are shutdown before doing an upgrade. This ensures that the upgrade
+# will recreate each pod one at a time, which in turn ensures that the database upgrades are done one at a
+# time. This is achieved with a pre-upgrade hook setting the replica count to 0.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: octopus
+  annotations:
+    "helm.sh/hook": pre-upgrade,pre-rollback
+spec:
+  selector:
+    matchLabels:
+      app: octopus
+  serviceName: "octopus"
+  replicas: 0
+  template:
+    metadata:
+      labels:
+        app: octopus
+    spec:
+      containers:
+        - name: octopus
+          image: {{.Values.octopus.image}}

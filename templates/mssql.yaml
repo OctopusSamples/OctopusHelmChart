@@ -1,0 +1,54 @@
+{{- if .Values.mssql.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql
+spec:
+  type: ClusterIP
+  ports:
+    -
+      port: 1433
+      targetPort: 1433
+      protocol: TCP
+  selector:
+    app: mssql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mssql-deployment
+  labels:
+    app: mssql
+spec:
+  selector:
+    matchLabels:
+      app: mssql
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mssql
+    spec:
+      terminationGracePeriodSeconds: 10
+      #volumes:
+      #  - name: mssqldb
+      #    persistentVolumeClaim:
+      #      claimName: mssql-data
+      containers:
+        - name: mssql
+          image: mcr.microsoft.com/mssql/server:2019-latest
+          ports:
+            - containerPort: 1433
+          env:
+            - name: MSSQL_PID
+              value: Express
+            - name: ACCEPT_EULA
+              value: 'Y'
+            - name: SA_PASSWORD
+              value: Password01!
+#          volumeMounts:
+#            - name: mssqldb
+#              mountPath: /var/opt/mssql
+{{- end }}
