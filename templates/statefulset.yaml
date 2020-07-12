@@ -13,17 +13,30 @@ spec:
       labels:
         app: octopus
     spec:
+      affinity:
+        # Try and keep Octopus nodes on separate Kubernetes nodes
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - octopus
+                topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 10
-      #volumes:
-      #  - name: repository-vol
-      #    persistentVolumeClaim:
-      #      claimName: repository-claim
-      #  - name: artifacts-vol
-      #    persistentVolumeClaim:
-      #      claimName: artifacts-claim
-      #  - name: task-logs-vol
-      #    persistentVolumeClaim:
-      #      claimName: task-logs-claim
+      volumes:
+        - name: repository-vol
+          persistentVolumeClaim:
+            claimName: repository-claim
+        - name: artifacts-vol
+          persistentVolumeClaim:
+            claimName: artifacts-claim
+        - name: task-logs-vol
+          persistentVolumeClaim:
+            claimName: task-logs-claim
 {{- if .Values.dockerHub.login }}
       imagePullSecrets:
         - name: dockerhubcreds
@@ -58,13 +71,13 @@ spec:
               name: web
             - containerPort: 10943
               name: tentacle
-#          volumeMounts:
-#            - name: repository-vol
-#              mountPath: /repository
-#            - name: artifacts-vol
-#              mountPath: /artifacts
-#            - name: task-logs-vol
-#              mountPath: /taskLogs
+          volumeMounts:
+            - name: repository-vol
+              mountPath: /repository
+            - name: artifacts-vol
+              mountPath: /artifacts
+            - name: task-logs-vol
+              mountPath: /taskLogs
           lifecycle:
             preStop:
               exec:

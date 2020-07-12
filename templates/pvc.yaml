@@ -1,0 +1,41 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: repository-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  {{- if .Values.octopus.storageClassName }}
+  storageClassName: azurefile
+  {{- end }}
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: artifacts-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  {{- if .Values.octopus.storageClassName }}
+  storageClassName: azurefile
+  {{- end }}
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: task-logs-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  {{- if .Values.octopus.storageClassName }}
+  storageClassName: azurefile
+  {{- end }}
+  resources:
+    requests:
+      storage: 1Gi
