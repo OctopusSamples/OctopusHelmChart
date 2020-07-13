@@ -50,7 +50,7 @@ spec:
             {{- end }}
           env:
             - name: ACCEPT_EULA
-              value: "{{.Values.octopus.acceptEula}}"
+              value: !!str "{{.Values.octopus.acceptEula}}"
             - name: OCTOPUS_SERVER_NODE_NAME
               valueFrom:
                 fieldRef:
@@ -69,7 +69,7 @@ spec:
             - name: MASTER_KEY
               value: {{.Values.octopus.masterKey}}
           {{- if not .Values.octopus.enableDockerInDocker }}
-            - DISABLE_DIND = "Y"
+            - DISABLE_DIND = !!str "Y"
           {{- end }}
           ports:
             - containerPort: 8080

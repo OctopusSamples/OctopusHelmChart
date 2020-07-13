@@ -41,7 +41,7 @@ spec:
             - name: MSSQL_PID
               value: Express
             - name: ACCEPT_EULA
-              value: "{{.Values.mssql.acceptEula}}"
+              value: !!str "{{.Values.mssql.acceptEula}}"
             - name: SA_PASSWORD
               value: {{.Values.mssql.saPassword}}
 {{- end }}
