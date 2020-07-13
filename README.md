@@ -10,26 +10,29 @@ This chart uses the mssql-linux chart as a dependency. See https://github.com/he
 
 Install the S3 plugin with the command:
 
-```
-helm plugin install https://github.com/hypnoglow/helm-s3.git
-```
-
-Add the repo with the command:
-
-```
-helm repo add octopus-helm-charts s3://octopus-helm-charts
-```
-
 Package the chart with the command:
 
 ```
 helm package .
 ```
 
+Download the existing index.yaml file:
+
+```
+aws s3 cp s3://octopus-helm-charts/index.yaml .
+```
+
 Push the package with the command:
 
 ```
-helm s3 push octopuschart.0.1.1.tgz octopus-helm-charts
+helm repo index . --url https://octopus-helm-charts.s3.amazonaws.com --merge index.yaml
+```
+
+Upload the new files with the command
+
+```
+aws s3 cp *.tgz s3://octopus-helm-charts
+aws s3 cp index.yaml s3://octopus-helm-charts
 ```
 
 The bucket can be found at https://s3.console.aws.amazon.com/s3/buckets/octopus-helm-charts/?region=us-east-1&tab=overview.
