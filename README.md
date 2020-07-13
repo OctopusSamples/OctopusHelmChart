@@ -8,6 +8,8 @@ This chart uses the mssql-linux chart as a dependency. See https://github.com/he
 
 # Deploying
 
+The chart can be built and published with the script `publish-chart.ps1`. The commands it uses are shown below.
+
 Package the chart with the command:
 
 ```
