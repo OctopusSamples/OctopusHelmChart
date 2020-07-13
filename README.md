@@ -36,3 +36,9 @@ aws s3 cp index.yaml s3://octopus-helm-charts
 ```
 
 The bucket can be found at https://s3.console.aws.amazon.com/s3/buckets/octopus-helm-charts/?region=us-east-1&tab=overview.
+
+# In Octopus
+
+Create a new release at https://github.com/OctopusSamples/OctopusHelmChart/releases/new.
+
+Run the deployment at https://deploy.octopushq.com/app#/Spaces-542/projects/octopus-server-helm-chart/deployments.
