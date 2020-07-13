@@ -8,8 +8,6 @@ This chart uses the mssql-linux chart as a dependency. See https://github.com/he
 
 # Deploying
 
-Install the S3 plugin with the command:
-
 Package the chart with the command:
 
 ```
@@ -22,13 +20,13 @@ Download the existing index.yaml file:
 aws s3 cp s3://octopus-helm-charts/index.yaml .
 ```
 
-Push the package with the command:
+Create the new index with the command:
 
 ```
 helm repo index . --url https://octopus-helm-charts.s3.amazonaws.com --merge index.yaml
 ```
 
-Upload the new files with the command
+Upload the new files with the command:
 
 ```
 aws s3 cp *.tgz s3://octopus-helm-charts
