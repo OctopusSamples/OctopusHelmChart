@@ -45,7 +45,9 @@ spec:
         - name: octopus
           image: {{.Values.octopus.image}}
           securityContext:
+            {{- if .Values.octopus.enableDockerInDocker }}
             privileged: true
+            {{- end }}
           env:
             - name: ACCEPT_EULA
               value: "{{.Values.octopus.acceptEula}}"
@@ -66,6 +68,9 @@ spec:
               value: {{ .Values.octopus.licenseKeyBase64 }}
             - name: MASTER_KEY
               value: {{.Values.octopus.masterKey}}
+          {{- if not .Values.octopus.enableDockerInDocker }}
+            - DISABLE_DIND = "Y"
+          {{- end }}
           ports:
             - containerPort: 8080
               name: web

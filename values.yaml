@@ -9,6 +9,11 @@ octopus:
   password: Password01!
   # The Octopus admin email
   email: admin@example.org
+  # The built in worker can use execution containers to run steps inside special Docker images.
+  # https://octopus.com/docs/deployment-process/execution-containers-for-workers.
+  # This requires supporting Docker in Docker, which in turn means the Octopus image must be run with
+  # all privileges. Disabling this setting disabled DOcker-In-Docker and does not set the privileged mode.
+  enableDockerInDocker: true
   # Change this, as it is used to encrypt secrets
   masterKey: 6EdU6IWsCtMEwk0kPKflQQ==
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
@@ -18,6 +23,7 @@ octopus:
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
   # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support ReadWriteMany access modes.
+  # Azure AKS uses azurefile for this ReadWriteMany volumes.
   storageClassName:
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
