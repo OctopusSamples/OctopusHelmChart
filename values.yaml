@@ -18,8 +18,11 @@ octopus:
   masterKey: 6EdU6IWsCtMEwk0kPKflQQ==
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
   acceptEula: "N"
-  # Use the MS SQL server defined below
-  connectionString: Server=mssql,1433;Database=Octopus;User Id=SA;Password=Password01!
+  # Use the MS SQL server defined below.
+  # Note the hostname of the mssql server is <Release Name>-mssql-linux. This default value assumes a release name of "octopus".
+  # This value must be changed to match a different release name.
+  # See https://github.com/helm/helm/issues/2492 for why we can't use a dynamic release name in this value.
+  connectionString: Server=octopus-mssql-linux,1433;Database=Octopus;User Id=SA;Password=Password01!
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
   # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support ReadWriteMany access modes.
@@ -49,11 +52,10 @@ dockerHub:
   # kubectl create secret docker-registry regcred --docker-username=myusername --docker-password=mypassword --dry-run=client -o yaml
   creds:
 
-mssql:
+# The MS SQL subchart values
+mssql-linux:
   # If enabled, a simple MS SQL server will be deployed. Note that this server is not production ready, as it
   # uses ephemeral storage. A ClusterIP service with the hostname of mssql is also created.
   enabled: true
-  # This will need to be included in the octopus.connectionString setting
-  saPassword: Password01!
-  # Must be set to "Y" including quotes to accept the MSSQL EULA
-  acceptEula: "N"
+  # Set the SA password, used by the octopus.connectionString value
+  sapassword: Password01!
