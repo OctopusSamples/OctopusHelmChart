@@ -10,7 +10,7 @@ spec:
   {{- end }}
   resources:
     requests:
-      storage: 1Gi
+      storage: {{.Values.octopus.repositoryVolumeSize}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -24,7 +24,7 @@ spec:
   {{- end }}
   resources:
     requests:
-      storage: 1Gi
+      storage: {{.Values.octopus.artifactVolumeSize}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -38,4 +38,4 @@ spec:
   {{- end }}
   resources:
     requests:
-      storage: 1Gi
+      storage: {{.Values.octopus.taskVolumeSize}}

@@ -15,6 +15,23 @@ octopus:
   acceptEula: "Y"
   # Use the MS SQL server defined below
   connectionString: Server=mssql,1433;Database=Octopus;User Id=SA;Password=Password01!
+  # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
+  licenseKeyBase64:
+  # An optional persistent volume claim class name for the Octopus server volumes
+  storageClassName:
+  # The size of the repository volume
+  repositoryVolumeSize: 1Gi
+  # The size of the arifact volume
+  artifactVolumeSize: 1Gi
+  # The size of the task log volume
+  taskVolumeSize: 1Gi
+
+dockerHub:
+  # Set to true to create a secret containing the docker registry password
+  login: false
+  # The base 64 encoded Docker config.json file. This value can be created with the command:
+  # kubectl create secret docker-registry regcred --docker-username=myusername --docker-password=mypassword --dry-run=client -o yaml
+  creds:
 
 mssql:
   # If enabled, a simple MS SQL server will be deployed. Note that this server is not production ready, as it
