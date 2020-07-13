@@ -33,6 +33,8 @@ octopus:
   licenseKeyBase64:
   # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support ReadWriteMany access modes.
   # Azure AKS uses azurefile for this ReadWriteMany volumes.
+  # Google uses Filestore: https://cloud.google.com/filestore/docs/accessing-fileshares
+  # Amazon uses EBS or EFS: https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/
   storageClassName:
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
