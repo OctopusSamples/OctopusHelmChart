@@ -12,7 +12,7 @@ octopus:
   # Change this, as it is used to encrypt secrets
   masterKey: 6EdU6IWsCtMEwk0kPKflQQ==
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
-  acceptEula: "Y"
+  acceptEula: "N"
   # Use the MS SQL server defined below
   connectionString: Server=mssql,1433;Database=Octopus;User Id=SA;Password=Password01!
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
@@ -37,3 +37,7 @@ mssql:
   # If enabled, a simple MS SQL server will be deployed. Note that this server is not production ready, as it
   # uses ephemeral storage and easily guessed credentials.
   enabled: true
+  # This will need to be included in the octopus.connectionString setting
+  saPassword: Password01!
+  # Must be set to "Y" including quotes to accept the MSSQL EULA
+  acceptEula: "N"

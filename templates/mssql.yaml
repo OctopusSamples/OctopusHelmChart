@@ -32,10 +32,6 @@ spec:
         app: mssql
     spec:
       terminationGracePeriodSeconds: 10
-      #volumes:
-      #  - name: mssqldb
-      #    persistentVolumeClaim:
-      #      claimName: mssql-data
       containers:
         - name: mssql
           image: mcr.microsoft.com/mssql/server:2019-latest
@@ -45,10 +41,7 @@ spec:
             - name: MSSQL_PID
               value: Express
             - name: ACCEPT_EULA
-              value: 'Y'
+              value: "{{.Values.mssql.acceptEula}}"
             - name: SA_PASSWORD
-              value: Password01!
-#          volumeMounts:
-#            - name: mssqldb
-#              mountPath: /var/opt/mssql
+              value: {{.Values.mssql.saPassword}}
 {{- end }}
