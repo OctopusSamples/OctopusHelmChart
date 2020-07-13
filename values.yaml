@@ -31,6 +31,10 @@ octopus:
   artifactVolumeSize: 1Gi
   # The size of the task log volume
   taskVolumeSize: 1Gi
+  # The port to access the web interface
+  webPort: 80
+  # The port to access the polling tentacles on
+  tentaclePort: 10943
   # Settings concerning polling tentacles across the HA nodes
   pollingTenatcles:
     # If true, a load balancer is created for each Octopus instance for polling tentacles to point to.

@@ -6,13 +6,13 @@ spec:
   type: LoadBalancer
   ports:
     - name: web
-      port: 80
+      port: {{.Values.octopus.webPort}}
       targetPort: 8080
       protocol: TCP
   {{- if (eq (.Values.octopus.replicaCount | int) 1)}}
     # If there is only one node, expose the tentacle along with the web port
     - name: tentacle
-      port: 10943
+      port: {{.Values.octopus.tentaclePort}}
       targetPort: 10943
       protocol: TCP
   {{- end }}
@@ -29,11 +29,11 @@ spec:
   type: LoadBalancer
   ports:
     - name: web
-      port: 80
+      port: {{.Values.octopus.webPort}}
       targetPort: 8080
       protocol: TCP
     - name: tentacle
-      port: 10943
+      port: {{.Values.octopus.tentaclePort}}
       targetPort: 10943
       protocol: TCP
   selector:
