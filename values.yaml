@@ -21,10 +21,16 @@ octopus:
   storageClassName:
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
-  # The size of the arifact volume
+  # The size of the artifact volume
   artifactVolumeSize: 1Gi
   # The size of the task log volume
   taskVolumeSize: 1Gi
+  # Settings concerning polling tentacles across the HA nodes
+  pollingTenatcles:
+    # If true, a load balancer is created for each Octopus instance for polling tentacles to point to.
+    # Note that if replicaCount is 1, the load balancer exposing the web interface also exposes port 10943
+    # to allow tentacles to connect to the single instance, and this setting should be set to false.
+    exposeLoadBalancers: true
 
 dockerHub:
   # Set to true to create a secret containing the docker registry password
