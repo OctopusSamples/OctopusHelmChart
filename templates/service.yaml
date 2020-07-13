@@ -9,7 +9,7 @@ spec:
       port: 80
       targetPort: 8080
       protocol: TCP
-  {{- if (eq .Values.octopus.replicaCount 1)}}
+  {{- if (eq (.Values.octopus.replicaCount | int) 1)}}
     # If there is only one node, expose the tentacle along with the web port
     - name: tentacle
       port: 10943
