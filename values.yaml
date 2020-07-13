@@ -1,4 +1,10 @@
 octopus:
+  statefulSet:
+    annotations: {}
+    labels: {}
+  pods:
+    annotations: {}
+    labels: {}
   # The Octopus server image. Visit https://hub.docker.com/r/octopusdeploy/octopusdeploy for the available versions.
   image: octopusdeploy/octopusdeploy-prerelease:2020.3.0-beta1789.linux
   # Set this to 1 if you do not have a HA license.
@@ -52,10 +58,13 @@ dockerHub:
   # kubectl create secret docker-registry regcred --docker-username=myusername --docker-password=mypassword --dry-run=client -o yaml
   creds:
 
-# The MS SQL subchart values
+# The MS SQL subchart values. See https://github.com/helm/charts/tree/master/stable/mssql-linux for more details.
 mssql-linux:
   # If enabled, a simple MS SQL server will be deployed. Note that this server is not production ready, as it
   # uses ephemeral storage. A ClusterIP service with the hostname of mssql is also created.
   enabled: true
   # Set the SA password, used by the octopus.connectionString value
   sapassword: Password01!
+  # Must be set to "Y" to accept the EULA
+  acceptEula:
+    value: "N"
