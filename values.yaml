@@ -17,7 +17,7 @@ octopus:
   connectionString: Server=mssql,1433;Database=Octopus;User Id=SA;Password=Password01!
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
-  # An optional persistent volume claim class name for the Octopus server volumes
+  # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support ReadWriteMany access modes.
   storageClassName:
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
@@ -41,7 +41,7 @@ dockerHub:
 
 mssql:
   # If enabled, a simple MS SQL server will be deployed. Note that this server is not production ready, as it
-  # uses ephemeral storage and easily guessed credentials.
+  # uses ephemeral storage. A ClusterIP service with the hostname of mssql is also created.
   enabled: true
   # This will need to be included in the octopus.connectionString setting
   saPassword: Password01!
