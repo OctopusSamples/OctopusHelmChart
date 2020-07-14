@@ -36,6 +36,8 @@ octopus:
   # Google uses Filestore: https://cloud.google.com/filestore/docs/accessing-fileshares
   # Amazon uses EFS: https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html
   storageClassName:
+  # A HA cluster required shared access to the volumes between Octopus nodes. If replicaCount is 1 though, this value can be set to ReadWriteOnce
+  storageAccessMode: ReadWriteMany
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
   # The size of the artifact volume

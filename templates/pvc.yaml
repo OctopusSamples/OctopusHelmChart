@@ -4,7 +4,7 @@ metadata:
   name: repository-claim
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{.Values.octopus.storageAccessMode}}
   {{- if .Values.octopus.storageClassName }}
   storageClassName: {{.Values.octopus.storageClassName}}
   {{- end }}
@@ -18,7 +18,7 @@ metadata:
   name: artifacts-claim
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{.Values.octopus.storageAccessMode}}
   {{- if .Values.octopus.storageClassName }}
   storageClassName: {{.Values.octopus.storageClassName}}
   {{- end }}
@@ -32,7 +32,7 @@ metadata:
   name: task-logs-claim
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{.Values.octopus.storageAccessMode}}
   {{- if .Values.octopus.storageClassName }}
   storageClassName: {{.Values.octopus.storageClassName}}
   {{- end }}
