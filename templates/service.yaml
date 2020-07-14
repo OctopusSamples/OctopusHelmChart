@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: octopus-web
 spec:
-  type: LoadBalancer
+  type: {{.Values.octopus.serviceType}}
   ports:
     - name: web
       port: {{.Values.octopus.webPort}}
@@ -18,7 +18,7 @@ spec:
   {{- end }}
   selector:
     app: octopus
-{{- if .Values.octopus.pollingTenatcles.exposeLoadBalancers }}
+{{- if .Values.octopus.pollingTenatcles.exposeServices }}
 {{- $root := . -}}
 {{- range untilStep 0 (.Values.octopus.replicaCount | int) 1 }}
 ---
@@ -27,7 +27,7 @@ kind: Service
 metadata:
   name: octopus-{{ . }}
 spec:
-  type: LoadBalancer
+  type: {{.Values.octopus.serviceType}}
   ports:
     - name: web
       port: {{$root.Values.octopus.webPort}}
