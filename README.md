@@ -13,6 +13,7 @@ Deploy the cart with the command:
 ```
 helm repo add octopus https://octopus-helm-charts.s3.amazonaws.com
 helm repo update
+helm install octopus2 octopus/octopusdeploy --set octopus.licenseKeyBase64=>your Octopus license key base64 encoded> --set octopus.acceptEula=Y --set mssql-linux.acceptEula.value=Y
 ```
 
 # Deploying
