@@ -25,10 +25,7 @@ octopus:
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
   acceptEula: "N"
   # Use the MS SQL server defined below.
-  # Note the hostname of the mssql server is <Release Name>-mssql-linux. This default value assumes a release name of "octopus".
-  # This value must be changed to match a different release name.
-  # See https://github.com/helm/helm/issues/2492 for why we can't use a dynamic release name in this value.
-  connectionString: Server=octopus-mssql-linux,1433;Database=Octopus;User Id=SA;Password=Password01!
+  connectionString: Server={{ .Release.Name }}-mssql-linux,1433;Database=Octopus;User Id=SA;Password=Password01!
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
   # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support ReadWriteMany access modes for HA clusters,

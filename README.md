@@ -8,6 +8,13 @@ This chart uses the mssql-linux chart as a dependency. See https://github.com/he
 
 Kuberenetes v1.16 is required to deploy this chart.
 
+Deploy the cart with the command:
+
+```
+helm repo add octopus https://octopus-helm-charts.s3.amazonaws.com
+helm repo update
+```
+
 # Deploying
 
 The chart can be built and published with the script `publish-chart.ps1`. The commands it uses are shown below.

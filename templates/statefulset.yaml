@@ -71,7 +71,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: DB_CONNECTION_STRING
-              value: {{ .Values.octopus.connectionString }}
+              value: {{ tpl .Values.octopus.connectionString . }}
             - name: ADMIN_USERNAME
               value: {{.Values.octopus.username}}
             - name: ADMIN_PASSWORD
