@@ -12,7 +12,7 @@ spec:
   {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
   storageClassName: ""
   {{- else if .Values.octopus.storageClassName }}
-  storageClassName: "{{ .Values.persistence.storageClass }}"
+  storageClassName: "{{ .Values.octopus.storageClassName }}"
   {{- end }}
   resources:
     requests:
@@ -32,7 +32,7 @@ spec:
   {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
   storageClassName: ""
   {{- else if .Values.octopus.storageClassName }}
-  storageClassName: "{{ .Values.persistence.storageClass }}"
+  storageClassName: "{{ .Values.octopus.storageClassName }}"
   {{- end }}
   resources:
     requests:
@@ -52,7 +52,7 @@ spec:
   {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
   storageClassName: ""
   {{- else if .Values.octopus.storageClassName }}
-  storageClassName: "{{ .Values.persistence.storageClass }}"
+  storageClassName: "{{ .Values.octopus.storageClassName }}"
   {{- end }}
   resources:
     requests:
