@@ -6,7 +6,7 @@ spec:
   accessModes:
     - ReadWriteMany
   {{- if .Values.octopus.storageClassName }}
-  storageClassName: azurefile
+  storageClassName: {{.Values.octopus.storageClassName}}
   {{- end }}
   resources:
     requests:
@@ -20,7 +20,7 @@ spec:
   accessModes:
     - ReadWriteMany
   {{- if .Values.octopus.storageClassName }}
-  storageClassName: azurefile
+  storageClassName: {{.Values.octopus.storageClassName}}
   {{- end }}
   resources:
     requests:
@@ -34,7 +34,7 @@ spec:
   accessModes:
     - ReadWriteMany
   {{- if .Values.octopus.storageClassName }}
-  storageClassName: azurefile
+  storageClassName: {{.Values.octopus.storageClassName}}
   {{- end }}
   resources:
     requests:
