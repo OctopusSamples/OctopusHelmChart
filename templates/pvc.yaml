@@ -9,7 +9,7 @@ spec:
     {{- else }}
     - {{.Values.octopus.storageAccessMode}}
     {{- end }}
-  {{- if (eq "-" .Values.octopus.storageClassName) }}
+  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
   storageClassName: ""
   {{- else if .Values.octopus.storageClassName }}
   storageClassName: "{{ .Values.persistence.storageClass }}"
@@ -29,7 +29,7 @@ spec:
     {{- else }}
     - {{.Values.octopus.storageAccessMode}}
     {{- end }}
-  {{- if (eq "-" .Values.octopus.storageClassName) }}
+  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
   storageClassName: ""
   {{- else if .Values.octopus.storageClassName }}
   storageClassName: "{{ .Values.persistence.storageClass }}"
@@ -49,7 +49,7 @@ spec:
     {{- else }}
     - {{.Values.octopus.storageAccessMode}}
       {{- end }}
-  {{- if (eq "-" .Values.octopus.storageClassName) }}
+  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
   storageClassName: ""
   {{- else if .Values.octopus.storageClassName }}
   storageClassName: "{{ .Values.persistence.storageClass }}"
