@@ -6,6 +6,8 @@ This chart is available from the repository hosted at https://octopus-helm-chart
 
 This chart uses the mssql-linux chart as a dependency. See https://github.com/helm/charts/tree/master/stable/mssql-linux for details on configuring that chart.
 
+Kuberenetes v1.16 is required to deploy this chart.
+
 # Deploying
 
 The chart can be built and published with the script `publish-chart.ps1`. The commands it uses are shown below.
