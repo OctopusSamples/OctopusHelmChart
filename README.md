@@ -33,7 +33,7 @@ helm repo index . --url https://octopus-helm-charts.s3.amazonaws.com --merge ind
 Upload the new files with the command:
 
 ```
-aws s3 cp *.tgz s3://octopus-helm-charts
+aws s3 cp octopusdeploy-0.1.0.tgz s3://octopus-helm-charts
 aws s3 cp index.yaml s3://octopus-helm-charts
 ```
 
