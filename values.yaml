@@ -2,32 +2,45 @@ octopus:
   statefulSet:
     annotations: {}
     labels: {}
+
   pods:
     annotations: {}
     labels: {}
+
   # The Octopus server image. Visit https://hub.docker.com/r/octopusdeploy/octopusdeploy for the available versions.
   image: octopusdeploy/octopusdeploy:2020.3.1-linux
-  # Set this to 1 if you do not have a HA license.
+
+  # Set this to 1 if you do not have a HA license. If you want to run Octopus Deploy with HA and have an HA license, change the replica count
   replicaCount: 1
+
   # The Octopus admin username
-  username: admin
+  username:
+
   # The Octopus admin password
-  password: Password01!
+  password:
+
   # The Octopus admin email
-  email: admin@example.org
+  email:
+
   # The built in worker can use execution containers to run steps inside special Docker images.
   # https://octopus.com/docs/deployment-process/execution-containers-for-workers.
   # This requires supporting Docker in Docker, which in turn means the Octopus image must be run with
   # all privileges. Disabling this setting disabled DOcker-In-Docker and does not set the privileged mode.
   enableDockerInDocker: true
-  # Change this, as it is used to encrypt secrets
-  masterKey: 6EdU6IWsCtMEwk0kPKflQQ==
+
+  # The master key is used to create a database master key. This is so all of the Kubernetes replicas (the Octopus Deploy pods) can connect to the database.
+  # To create a new master key, run this command: `openssl rand 16 | base64`
+  masterKey:
+
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
-  acceptEula: "N"
+  acceptEula: "Y"
+
   # connectionString is the MSSQL connection string that you want the Octopus Deploy pods to connect to.
   connectionString:
+
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
+
   # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support ReadWriteMany access modes for HA clusters.
   # ReadWriteOnce or ReadWriteMany can be used for single node clusters.
   # A dash (i.e. "-") means use an empty string is defined as the storageClass attribute. This effectively means there is no automatic provisioning of persistent volumes, and the PV's need to be created externally outside of this chart.
@@ -38,22 +51,30 @@ octopus:
   # Google uses Filestore for ReadWriteMany volumes: https://cloud.google.com/filestore/docs/accessing-fileshares
   # Amazon uses EFS for ReadWriteMany volumes: https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html
   storageClassName: ""
+
   # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the storage more is always ReadWriteMany.
   storageAccessMode: ReadWriteOnce
+
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
+
   # The size of the artifact volume
   artifactVolumeSize: 1Gi
+
   # The size of the task log volume
   taskVolumeSize: 1Gi
+
   # The port to access the web interface
   webPort: 80
   # The port to access the polling tentacles on
+
   tentaclePort: 10943
   # The type of service created to expose the Octopus nodes. Options are ClusterIP and NodePort.
   serviceType: LoadBalancer
+
   # Settings concerning polling tentacles across the HA nodes
   pollingTenatcles:
+  
     # If true, a load balancer is created for each Octopus instance for polling tentacles to point to.
     # This is because polling tentacles need to query each Octopus node to get new tasks.
     # The docs at https://octopus.com/docs/administration/high-availability/configuring-octopus-for-high-availability
@@ -68,14 +89,3 @@ dockerHub:
   # The base 64 encoded Docker config.json file. This value can be created with the command:
   # kubectl create secret docker-registry regcred --docker-username=myusername --docker-password=mypassword --dry-run=client -o yaml
   creds:
-
-# The MS SQL subchart values. See https://github.com/helm/charts/tree/master/stable/mssql-linux for more details.
-mssql-linux:
-  # If enabled, a simple MS SQL server will be deployed. Note that this server is not production ready, as it
-  # uses ephemeral storage. A ClusterIP service with the hostname of mssql is also created.
-  enabled: true
-  # Set the SA password, used by the octopus.connectionString value
-  sapassword: Password01!
-  # Must be set to "Y" to accept the EULA
-  acceptEula:
-    value: "N"
