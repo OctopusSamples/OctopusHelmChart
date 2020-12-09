@@ -20,4 +20,4 @@ spec:
     spec:
       containers:
         - name: octopus
-          image: {{.Values.octopus.image}}
+          image: {{.Values.image}}

@@ -14,10 +14,10 @@ octopus:
   replicaCount: 1
 
   # The Octopus admin username
-  ADMIN_USERNAME:
+  ADMIN_USERNAME: admin
 
   # The Octopus admin password
-  ADMIN_PASSWORD:
+  ADMIN_PASSWORD: P@ssw0rd!
 
   # The Octopus admin email
   email:
@@ -36,7 +36,7 @@ octopus:
   acceptEula: "Y"
 
   # connectionString is the MSSQL connection string that you want the Octopus Deploy pods to connect to.
-  DB_CONNECTION_STRING:
+  DB_CONNECTION_STRING: "Server=tcp:octopussqlprod.database.windows.net,1433;Initial Catalog=octopusdb;Persist Security Info=False;User ID=mike;Password=SecreTP@assw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:

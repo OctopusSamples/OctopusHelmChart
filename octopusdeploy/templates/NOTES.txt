@@ -2,15 +2,11 @@ Thank you for installing Octopus Deploy.
 
 Your release is named {{ .Release.Name }}.
 
-{{- if index .Values "mssql-linux" "enabled" }}
-MS SQL has been installed.
-{{- end }}
-
 To get the address of the web interface load balancer, run:
 $ kubectl get service octopus-web
 
 To get the address of the polling tentacle load balancers, run:
-{{- range untilStep 0 (.Values.octopus.replicaCount | int) 1 }}
+{{- range untilStep 0 (.Values.replicaCount | int) 1 }}
 $ kubectl get service octopus-{{ . }}
 {{- end }}
 

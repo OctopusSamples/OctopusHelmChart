@@ -3,38 +3,38 @@ kind: Service
 metadata:
   name: octopus-web
 spec:
-  type: {{.Values.octopus.serviceType}}
+  type: {{.Values.serviceType}}
   ports:
     - name: web
-      port: {{.Values.octopus.webPort}}
+      port: {{.Values.webPort}}
       targetPort: 8080
       protocol: TCP
-  {{- if (eq (.Values.octopus.replicaCount | int) 1)}}
+  {{- if (eq (.Values.replicaCount | int) 1)}}
     # If there is only one node, expose the tentacle along with the web port
     - name: tentacle
-      port: {{.Values.octopus.tentaclePort}}
+      port: {{.Values.tentaclePort}}
       targetPort: 10943
       protocol: TCP
   {{- end }}
   selector:
     app: octopus
-{{- if .Values.octopus.pollingTenatcles.exposeServices }}
+{{- if .Values.exposeServices }}
 {{- $root := . -}}
-{{- range untilStep 0 (.Values.octopus.replicaCount | int) 1 }}
+{{- range untilStep 0 ( .Values.replicaCount | int) 1 }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: octopus-{{ . }}
 spec:
-  type: {{.Values.octopus.serviceType}}
+  type: {{.Values.serviceType}}
   ports:
     - name: web
-      port: {{$root.Values.octopus.webPort}}
+      port: {{$root.Values.webPort}}
       targetPort: 8080
       protocol: TCP
     - name: tentacle
-      port: {{$root.Values.octopus.tentaclePort}}
+      port: {{$root.Values.tentaclePort}}
       targetPort: 10943
       protocol: TCP
   selector:

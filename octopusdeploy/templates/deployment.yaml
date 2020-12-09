@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.deploymentName }}
-        image: {{ .Values.image.repository }}
+        image: {{ .Values.image }}
         env:
         - name: ACCEPT_EULA
           value: {{ .Values.acceptEula }}
@@ -26,8 +26,13 @@ spec:
           value: {{ .Values.DB_CONNECTION_STRING }}
         - name: MASTER_KEY
           value: {{ .Values.MASTER_KEY }}
+        - name: ADMIN_EMAIL
+          value: {{.Values.email}}
+        - name: OCTOPUS_SERVER_BASE64_LICENSE
+          value: {{ .Values.OCTOPUS_SERVER_BASE64_LICENSE }}
         ports:
         - containerPort: {{ .Values.containerPort }}
+
         volumeMounts:
           - name: tasklogs
             mountPath: /taskLogs
@@ -35,6 +40,13 @@ spec:
             mountPath: /artifacts
           - name: repository
             mountPath: /repository
+            
+      livenessProbe:
+        exec:
+          command:
+            - /bin/bash
+            - -c
+            - URL=http://localhost:8080; response=$(/usr/bin/curl -k $URL/api/octopusservernodes/ping --write-out %{http_code} --silent --output /dev/null); /usr/bin/test "$response" -ge 200 && /usr/bin/test "$response" -le 299 || /usr/bin/test "$response" -eq 418
 
       volumes:
         - name: tasklogs
