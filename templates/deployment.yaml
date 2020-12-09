@@ -17,7 +17,7 @@ spec:
         image: {{ .Values.image.repository }}
         env:
         - name: ACCEPT_EULA
-          value: "Y"
+          value: {{ .Values.acceptEula }}
         - name: ADMIN_USERNAME
           value: {{ .Values.ADMIN_USERNAME }}
         - name: ADMIN_PASSWORD
