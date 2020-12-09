@@ -24,8 +24,8 @@ octopus:
   masterKey: 6EdU6IWsCtMEwk0kPKflQQ==
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
   acceptEula: "N"
-  # Use the MS SQL server defined below.
-  connectionString: Server={{ .Release.Name }}-mssql-linux,1433;Database=Octopus;User Id=SA;Password=Password01!
+  # connectionString is the MSSQL connection string that you want the Octopus Deploy pods to connect to.
+  connectionString:
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
   # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support ReadWriteMany access modes for HA clusters.

@@ -1,0 +1,48 @@
+apiVersion: {{ .Values.apiVersion }}
+kind: Deployment
+metadata:
+  name: {{ .Values.deploymentName }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deploymentName }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deploymentName }}
+    spec:
+      containers:
+      - name: {{ .Values.deploymentName }}
+        image: {{ .Values.image.repository }}
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: ADMIN_USERNAME
+          value: {{ .Values.ADMIN_USERNAME }}
+        - name: ADMIN_PASSWORD
+          value: {{ .Values.ADMIN_PASSWORD }}
+        - name: DB_CONNECTION_STRING
+          value: {{ .Values.DB_CONNECTION_STRING }}
+        - name: MASTER_KEY
+          value: {{ .Values.MASTER_KEY }}
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+        volumeMounts:
+          - name: tasklogs
+            mountPath: /taskLogs
+          - name: artifacts
+            mountPath: /artifacts
+          - name: repository
+            mountPath: /repository
+
+      volumes:
+        - name: tasklogs
+          persistentVolumeClaim:
+            claimName: task-logs-claim
+        - name: repository
+          persistentVolumeClaim:
+            claimName: repository-claim
+        - name: artifacts
+          persistentVolumeClaim:
+            claimName: artifacts-claim
