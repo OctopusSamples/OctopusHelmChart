@@ -4,57 +4,56 @@ metadata:
   name: repository-claim
 spec:
   accessModes:
-  #   {{- if (gt (.Values.replicaCount | int) 1)}}
-  #   - ReadWriteMany
-  #   {{- else }}
-  #   - {{.Values.storageAccessMode}}
-  #   {{- end }}
-  # {{- if (eq "-" (.Values.storageClassName | toString)) }}
+    {{- if (gt (.Values.replicaCount | int) 1)}}
+    - ReadWriteMany
+    {{- else }}
+    - {{.Values.storageAccessMode}}
+    {{- end }}
+  {{- if (eq "-" (.Values.storageClassName | toString)) }}
   storageClassName: ""
   {{- else if .Values.storageClassName }}
   storageClassName: "{{ .Values.storageClassName }}"
   {{- end }}
   resources:
     requests:
-      # storage: fails when you try to pass in a value from values.yaml
-      storage: 3Gi
-# ---
-# kind: PersistentVolumeClaim
-# apiVersion: v1
-# metadata:
-#   name: artifacts-claim
-# spec:
-#   accessModes:
-#     {{- if (gt (.Values.replicaCount | int) 1)}}
-#     - ReadWriteMany
-#     {{- else }}
-#     - {{.Values.storageAccessMode}}
-#     {{- end }}
-#   {{- if (eq "-" (.Values.storageClassName | toString)) }}
-#   storageClassName: ""
-#   {{- else if .Values.storageClassName }}
-#   storageClassName: "{{ .Values.storageClassName }}"
-#   {{- end }}
-#   resources:
-#     requests:
-#       storage: {{ .Values.taskVolumeSize }}
-# ---
-# kind: PersistentVolumeClaim
-# apiVersion: v1
-# metadata:
-#   name: task-logs-claim
-# spec:
-#   accessModes:
-#     {{- if (gt (.Values.replicaCount | int) 1)}}
-#     - ReadWriteMany
-#     {{- else }}
-#     - {{.Values.storageAccessMode}}
-#       {{- end }}
-#   {{- if (eq "-" (.Values.storageClassName | toString)) }}
-#   storageClassName: ""
-#   {{- else if .Values.storageClassName }}
-#   storageClassName: "{{ .Values.storageClassName }}"
-#   {{- end }}
-#   resources:
-#     requests:
-#       storage: {{ .Values.taskVolumeSize }}
+      storage: 1Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: artifacts-claim
+spec:
+  accessModes:
+    {{- if (gt (.Values.replicaCount | int) 1)}}
+    - ReadWriteMany
+    {{- else }}
+    - {{.Values.storageAccessMode}}
+    {{- end }}
+  {{- if (eq "-" (.Values.storageClassName | toString)) }}
+  storageClassName: ""
+  {{- else if .Values.storageClassName }}
+  storageClassName: "{{ .Values.storageClassName }}"
+  {{- end }}
+  resources:
+    requests:
+      storage: {{.Values.artifactVolumeSize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: task-logs-claim
+spec:
+  accessModes:
+    {{- if (gt (.Values.replicaCount | int) 1)}}
+    - ReadWriteMany
+    {{- else }}
+    - {{.Values.storageAccessMode}}
+      {{- end }}
+  {{- if (eq "-" (.Values.storageClassName | toString)) }}
+  storageClassName: ""
+  {{- else if .Values.storageClassName }}
+  storageClassName: "{{ .Values.storageClassName }}"
+  {{- end }}
+  resources:
+    requests:
+      storage: {{.Values.taskVolumeSize}}
