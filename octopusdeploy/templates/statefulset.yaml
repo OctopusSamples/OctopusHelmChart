@@ -2,31 +2,24 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: octopus
-  {{- if .Values.octopus.statefulSet.annotations }}
+  {{- if .Values.statefulSetLabel }}
   annotations:
   {{ toYaml .Values.octopus.statefulSet.annotations | indent 2 }}
   {{- end }}
-  {{- if .Values.octopus.statefulSet.labels }}
+  {{- if .Values.statefulSetLabel }}
   labels:
-  {{ toYaml .Values.octopus.statefulSet.labels | indent 2 }}
+  {{ toYaml .Values.octopus.statefulSetLabel | indent 2 }}
   {{- end }}
 spec:
   selector:
     matchLabels:
       app: octopus
   serviceName: "octopus"
-  replicas: {{.Values.octopus.replicaCount}}
+  replicas: {{.Values.replicaCount}}
   template:
     metadata:
       labels:
         app: octopus
-      {{- if .Values.octopus.pods.labels }}
-      {{ toYaml .Values.octopus.pods.labels | indent 2 }}
-      {{- end }}
-      {{- if .Values.octopus.pods.annotations }}
-      annotations:
-      {{ toYaml .Values.octopus.pods.annotations | indent 2 }}
-      {{- end }}
     spec:
       affinity:
         # Try and keep Octopus nodes on separate Kubernetes nodes
@@ -52,40 +45,39 @@ spec:
         - name: task-logs-vol
           persistentVolumeClaim:
             claimName: task-logs-claim
-{{- if .Values.dockerHub.login }}
+{{- if .Values.dockerHubLogin }}
       imagePullSecrets:
         - name: dockerhubcreds
 {{- end }}
       containers:
         - name: octopus
-          image: {{.Values.octopus.image}}
+          image: {{.Values.image}}
           securityContext:
-            {{- if .Values.octopus.enableDockerInDocker }}
+            {{- if .Values.enableDockerInDocker }}
             privileged: true
             {{- end }}
           env:
             - name: ACCEPT_EULA
-              value: !!str "{{.Values.octopus.acceptEula}}"
+              value: !!str "{{.Values.acceptEula}}"
             - name: OCTOPUS_SERVER_NODE_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
             - name: DB_CONNECTION_STRING
-              value: {{ tpl .Values.octopus.connectionString . }}
+              value: {{ .Values.DB_CONNECTION_STRING }}
             - name: ADMIN_USERNAME
-              value: {{.Values.octopus.username}}
+              value: {{.Values.ADMIN_USERNAME}}
             - name: ADMIN_PASSWORD
-              value: {{.Values.octopus.password}}
+              value: {{.Values.ADMIN_PASSWORD}}
             - name: ADMIN_EMAIL
-              value: {{.Values.octopus.email}}
+              value: {{.Values.email}}
             - name: OCTOPUS_SERVER_BASE64_LICENSE
               # Your license key goes here. When using more than one node, a HA license is required. Without a HA license, the stateful set can have a replica count of 1.
-              value: {{ .Values.octopus.licenseKeyBase64 }}
+              value: {{ .Values.licenseKeyBase64 }}
             - name: MASTER_KEY
-              value: {{.Values.octopus.masterKey}}
-          {{- if not .Values.octopus.enableDockerInDocker }}
-            - DISABLE_DIND = !!str "Y"
-          {{- end }}
+              value: {{.Values.MASTER_KEY}}
+            - name: DISABLE_DIND
+              value: {{ .Values.enableDockerInDocker }}
           ports:
             - containerPort: 8080
               name: web

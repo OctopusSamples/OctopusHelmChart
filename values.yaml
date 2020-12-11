@@ -1,11 +1,8 @@
-octopus:
-  statefulSet:
-    annotations: {}
-    labels: {}
+statefulSetLabel:
+  environment: prod
 
-  pods:
-    annotations: {}
-    labels: {}
+podLabels:
+  environment: prod
 
   # The Octopus server image. Visit https://hub.docker.com/r/octopusdeploy/octopusdeploy for the available versions.
   image: octopusdeploy/octopusdeploy:2020.3.1-linux
@@ -33,10 +30,10 @@ octopus:
   MASTER_KEY:
 
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
-  acceptEula: "Y"
+  acceptEula: Y
 
   # connectionString is the MSSQL connection string that you want the Octopus Deploy pods to connect to.
-  DB_CONNECTION_STRING: "Server=tcp:octopussqlprod.database.windows.net,1433;Initial Catalog=octopusdb;Persist Security Info=False;User ID=mike;Password=SecreTP@assw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  DB_CONNECTION_STRING: ""
 
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
@@ -83,9 +80,7 @@ octopus:
     # to allow tentacles to connect to the single instance, and this setting will likely be set to false.
     exposeServices: false
 
-dockerHub:
-  # Set to true to create a secret containing the docker registry password
-  login: false
+dockerHubLogin: true
+creds: "test@gmail.com"
   # The base 64 encoded Docker config.json file. This value can be created with the command:
   # kubectl create secret docker-registry regcred --docker-username=myusername --docker-password=mypassword --dry-run=client -o yaml
-  creds:

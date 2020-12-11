@@ -5,14 +5,13 @@ metadata:
 spec:
   type: {{.Values.serviceType}}
   ports:
-    - name: web
-      port: {{.Values.webPort}}
-      targetPort: 8080
-      protocol: TCP
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
   {{- if (eq (.Values.replicaCount | int) 1)}}
     # If there is only one node, expose the tentacle along with the web port
     - name: tentacle
-      port: {{.Values.tentaclePort}}
+      port: 10943
       targetPort: 10943
       protocol: TCP
   {{- end }}
@@ -29,14 +28,14 @@ metadata:
 spec:
   type: {{.Values.serviceType}}
   ports:
-    - name: web
-      port: {{$root.Values.webPort}}
-      targetPort: 8080
-      protocol: TCP
-    - name: tentacle
-      port: {{$root.Values.tentaclePort}}
-      targetPort: 10943
-      protocol: TCP
+  - port: 80
+    name: web
+    targetPort: 8080
+    protocol: TCP
+  - port: 10943
+    name: tentacle
+    targetPort: 10943
+    protocol: TCP
   selector:
     statefulset.kubernetes.io/pod-name: octopus-{{ . }}
 {{- end }}
