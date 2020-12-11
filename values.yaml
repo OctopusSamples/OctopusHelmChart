@@ -47,7 +47,7 @@ podLabels:
   # Azure AKS uses azurefile for this ReadWriteMany volumes.
   # Google uses Filestore for ReadWriteMany volumes: https://cloud.google.com/filestore/docs/accessing-fileshares
   # Amazon uses EFS for ReadWriteMany volumes: https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html
-  storageClassName: ""
+  storageClassName: "test"
 
   # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the storage more is always ReadWriteMany.
   storageAccessMode: ReadWriteOnce

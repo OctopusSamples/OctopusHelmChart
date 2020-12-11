@@ -10,7 +10,7 @@ spec:
     - {{.Values.storageAccessMode}}
     {{- end }}
   {{- if (eq "-" (.Values.storageClassName | toString)) }}
-  storageClassName: ""
+  storageClassName: {{ .Values.storageClassName }}
   {{- else if .Values.storageClassName }}
   storageClassName: "{{ .Values.storageClassName }}"
   {{- end }}
