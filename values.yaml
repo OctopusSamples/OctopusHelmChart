@@ -8,7 +8,7 @@ podLabels:
   image: octopusdeploy/octopusdeploy:2020.3.1-linux
 
   # Set this to 1 if you do not have a HA license. If you want to run Octopus Deploy with HA and have an HA license, change the replica count
-  replicaCount: 1
+  replicaCount: 2
 
   # The Octopus admin username
   ADMIN_USERNAME: admin
@@ -50,7 +50,8 @@ podLabels:
   storageClassName: "test"
 
   # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the storage more is always ReadWriteMany.
-  storageAccessMode: ReadWriteOnce
+  storageAccessModeOneReplica: ReadWriteOnce
+  storageAccessModeManyReplicas: ReadWriteMany
 
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
