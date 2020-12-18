@@ -49,10 +49,6 @@ podLabels:
   # Amazon uses EFS for ReadWriteMany volumes: https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html
   storageClassName: "test"
 
-  # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the storage more is always ReadWriteMany.
-  storageAccessModeOneReplica: ReadWriteOnce
-  storageAccessModeManyReplicas: ReadWriteMany
-
   # The size of the repository volume
   repositoryVolumeSize: 1Gi
 
