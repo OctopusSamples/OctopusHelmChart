@@ -6,7 +6,7 @@ spec:
   # If you are using one replica, ensure the accessMode value is -ReadWriteOnce
   # If you have more than one replica, ensure the accessMode value is -ReadWriteMany
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: {{ .Values.storageClassName }}
   resources:
     requests:
