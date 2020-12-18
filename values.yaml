@@ -5,7 +5,7 @@ podLabels:
   environment: prod
 
   # The Octopus server image. Visit https://hub.docker.com/r/octopusdeploy/octopusdeploy for the available versions.
-  image: octopusdeploy/octopusdeploy:2020.3.1-linux
+  image: octopusdeploy/octopusdeploy:latest
 
   # Set this to 1 if you do not have a HA license. If you want to run Octopus Deploy with HA and have an HA license, change the replica count
   replicaCount: 2
