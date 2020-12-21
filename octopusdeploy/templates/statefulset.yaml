@@ -64,18 +64,18 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: DB_CONNECTION_STRING
-              value: {{ .Values.DB_CONNECTION_STRING }}
+              value: {{ .Values. dbConnectionString }}
             - name: ADMIN_USERNAME
-              value: {{.Values.ADMIN_USERNAME}}
+              value: {{.Values.adminUsername}}
             - name: ADMIN_PASSWORD
-              value: {{.Values.ADMIN_PASSWORD}}
+              value: {{.Values.adminPassword}}
             - name: ADMIN_EMAIL
               value: {{.Values.email}}
             - name: OCTOPUS_SERVER_BASE64_LICENSE
               # Your license key goes here. When using more than one node, a HA license is required. Without a HA license, the stateful set can have a replica count of 1.
               value: {{ .Values.licenseKeyBase64 }}
             - name: MASTER_KEY
-              value: {{.Values.MASTER_KEY}}
+              value: {{.Values.masterKey}}
             - name: DISABLE_DIND
               value: {{ .Values.enableDockerInDocker }}
           ports:

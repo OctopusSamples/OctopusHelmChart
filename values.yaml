@@ -11,10 +11,10 @@ podLabels:
   replicaCount: 1
 
   # The Octopus admin username
-  ADMIN_USERNAME: admin
+  adminUsername: admin
 
   # The Octopus admin password
-  ADMIN_PASSWORD: P@ssw0rd!
+  adminPassword: P@ssw0rd!
 
   # The Octopus admin email
   email:
@@ -27,13 +27,13 @@ podLabels:
 
   # The master key is used to create a database master key. This is so all of the Kubernetes replicas (the Octopus Deploy pods) can connect to the database.
   # To create a new master key, run this command: `openssl rand 16 | base64`
-  MASTER_KEY:
+  masterKey:
 
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
   acceptEula: Y
 
   # connectionString is the MSSQL connection string that you want the Octopus Deploy pods to connect to.
-  DB_CONNECTION_STRING: ""
+  dbConnectionString: ""
 
   # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
   licenseKeyBase64:
