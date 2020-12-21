@@ -4,11 +4,11 @@ metadata:
   name: octopus
   {{- if .Values.statefulSetLabel }}
   annotations:
-  {{ toYaml .Values.octopus.statefulSet.annotations | indent 2 }}
+  {{ toYaml .Values.annotations | indent 2 }}
   {{- end }}
   {{- if .Values.statefulSetLabel }}
   labels:
-  {{ toYaml .Values.octopus.statefulSetLabel | indent 2 }}
+  {{ toYaml .Values.statefulSetLabel | indent 2 }}
   {{- end }}
 spec:
   selector:
@@ -64,7 +64,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: DB_CONNECTION_STRING
-              value: {{ .Values. dbConnectionString }}
+              value: {{ .Values.dbConnectionString }}
             - name: ADMIN_USERNAME
               value: {{.Values.adminUsername}}
             - name: ADMIN_PASSWORD
