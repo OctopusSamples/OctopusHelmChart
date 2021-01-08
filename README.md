@@ -8,12 +8,18 @@ This chart uses the mssql-linux chart as a dependency. See https://github.com/he
 
 Kuberenetes v1.16 is required to deploy this chart.
 
+Generate a new master key with this command:
+
+```
+openssl rand 16 | base64
+```
+
 Deploy the chart with the command:
 
 ```
 helm repo add octopus https://octopus-helm-charts.s3.amazonaws.com
 helm repo update
-helm install octopus octopus/octopusdeploy --set octopus.licenseKeyBase64=<your Octopus license key base64 encoded> --set octopus.acceptEula=Y --set mssql-linux.acceptEula.value=Y
+helm install octopus octopus/octopusdeploy --set octopus.licenseKeyBase64=<your Octopus license key base64 encoded> --set octopus.acceptEula=Y --set mssql-linux.acceptEula.value=Y --set octopus.masterKey=YOUR_GENERATED_KEY
 ```
 
 # Deploying
