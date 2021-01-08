@@ -20,8 +20,8 @@ octopus:
   # This requires supporting Docker in Docker, which in turn means the Octopus image must be run with
   # all privileges. Disabling this setting disabled DOcker-In-Docker and does not set the privileged mode.
   enableDockerInDocker: true
-  # Change this, as it is used to encrypt secrets
-  masterKey: 6EdU6IWsCtMEwk0kPKflQQ==
+  # Change this, as it is used to encrypt secrets. Generate a key with: openssl rand 16 | base64
+  masterKey: GENERATE_ME
   # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
   acceptEula: "N"
   # Use the MS SQL server defined below.
