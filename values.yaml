@@ -10,11 +10,11 @@ octopus:
   # Set this to 1 if you do not have a HA license.
   replicaCount: 1
   # The Octopus admin username
-  username: admin
+  username:
   # The Octopus admin password
-  password: Password01!
+  password:
   # The Octopus admin email
-  email: admin@example.org
+  email:
   # The built in worker can use execution containers to run steps inside special Docker images.
   # https://octopus.com/docs/deployment-process/execution-containers-for-workers.
   # This requires supporting Docker in Docker, which in turn means the Octopus image must be run with
