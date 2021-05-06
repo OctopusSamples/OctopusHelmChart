@@ -27,7 +27,7 @@ kind: Service
 metadata:
   name: octopus-{{ . }}
 spec:
-  type: {{.Values.octopus.serviceType}}
+  type: {{$root.Values.octopus.serviceType}}
   ports:
     - name: web
       port: {{$root.Values.octopus.webPort}}
