@@ -53,6 +53,9 @@ octopus:
   artifactVolumeSize: 1Gi
   # The size of the task log volume
   taskVolumeSize: 1Gi
+  # The size of the server log volume. Each Octopus node mounts its own server log volume to ensure server logs
+  # persist across restarts.
+  logVolumeSize: 200Mi
   # The port to access the web interface
   webPort: 80
   # The port to access the polling tentacles on

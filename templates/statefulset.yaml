@@ -79,7 +79,8 @@ spec:
             - name: ADMIN_EMAIL
               value: {{.Values.octopus.email}}
             - name: OCTOPUS_SERVER_BASE64_LICENSE
-              # Your license key goes here. When using more than one node, a HA license is required. Without a HA license, the stateful set can have a replica count of 1.
+              # Your license key goes here. When using more than one node, a HA license is required.
+              # Without a HA license, the stateful set can have a replica count of 1.
               value: {{ .Values.octopus.licenseKeyBase64 }}
             - name: MASTER_KEY
               value: {{.Values.octopus.masterKey}}
@@ -98,6 +99,8 @@ spec:
               mountPath: /artifacts
             - name: task-logs-vol
               mountPath: /taskLogs
+            - name: server-logs-vol
+              mountPath: /Octopus/Octopus/Logs
           lifecycle:
             preStop:
               exec:
@@ -139,3 +142,11 @@ spec:
                 - URL=http://localhost:8080; response=$(/usr/bin/curl -k $URL/api/octopusservernodes/ping --write-out %{http_code} --silent --output /dev/null); /usr/bin/test "$response" -ge 200 && /usr/bin/test "$response" -le 299 || /usr/bin/test "$response" -eq 418
             failureThreshold: 30
             periodSeconds: 60
+  volumeClaimTemplates:
+    - metadata:
+        name: server-logs-vol
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{.Values.octopus.logVolumeSize}}
