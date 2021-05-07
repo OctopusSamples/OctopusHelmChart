@@ -100,7 +100,7 @@ spec:
             - name: task-logs-vol
               mountPath: /taskLogs
             - name: server-logs-vol
-              mountPath: /Octopus/Octopus/Logs
+              mountPath: /home/octopus/.octopus/OctopusServer/Server/Logs
           lifecycle:
             preStop:
               exec:
