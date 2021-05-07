@@ -7,6 +7,7 @@ metadata:
   name: octopus
   {{- if .Values.octopus.statefulSet.annotations }}
   annotations:
+    "helm.sh/hook": pre-upgrade,pre-rollback
   {{ toYaml .Values.octopus.statefulSet.annotations | indent 2 }}
   {{- end }}
   {{- if .Values.octopus.statefulSet.labels }}
