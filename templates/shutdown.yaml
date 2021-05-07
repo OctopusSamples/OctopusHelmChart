@@ -8,6 +8,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded
     "helm.sh/hook-weight": "0"
 spec:
+  ttlSecondsAfterFinished: 10
   template:
     spec:
       serviceAccountName: octopus-drain
