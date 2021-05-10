@@ -1,3 +1,15 @@
+apiVersion: v1
+data:
+  adminUsername: {{.Values.octopus.username | b64enc}}
+  adminPassword: {{.Values.octopus.password | b64enc}}
+  licenseKey: {{.Values.octopus.licenseKeyBase64 | b64enc}}
+  masterKey: {{.Values.octopus.masterKey | b64enc}}
+  dbConnString: {{ tpl .Values.octopus.connectionString . | b64enc}}
+kind: Secret
+metadata:
+  name: octopus-secrets
+type: Opaque
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -71,19 +83,34 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: DB_CONNECTION_STRING
-              value: {{ tpl .Values.octopus.connectionString . }}
+              valueFrom:
+                secretKeyRef:
+                  name: octopus-secrets
+                  key: dbConnString
             - name: ADMIN_USERNAME
-              value: {{.Values.octopus.username}}
+              valueFrom:
+                secretKeyRef:
+                  name: octopus-secrets
+                  key: adminUsername
             - name: ADMIN_PASSWORD
-              value: {{.Values.octopus.password}}
+              valueFrom:
+                secretKeyRef:
+                  name: octopus-secrets
+                  key: adminPassword
             - name: ADMIN_EMAIL
               value: {{.Values.octopus.email}}
             - name: OCTOPUS_SERVER_BASE64_LICENSE
               # Your license key goes here. When using more than one node, a HA license is required.
               # Without a HA license, the stateful set can have a replica count of 1.
-              value: {{ .Values.octopus.licenseKeyBase64 }}
+              valueFrom:
+                secretKeyRef:
+                  name: octopus-secrets
+                  key: licenseKey
             - name: MASTER_KEY
-              value: {{.Values.octopus.masterKey}}
+              valueFrom:
+                secretKeyRef:
+                  name: octopus-secrets
+                  key: masterKey
           {{- if not .Values.octopus.enableDockerInDocker }}
             - DISABLE_DIND = !!str "Y"
           {{- end }}
