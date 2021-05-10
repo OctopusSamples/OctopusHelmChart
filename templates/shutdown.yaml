@@ -17,4 +17,4 @@ spec:
       - name: k8s
         image: bitnami/kubectl
         imagePullPolicy: IfNotPresent
-        command: ["/bin/sh","-c", "kubectl patch statefulset octopus -p '{\"spec\": {\"replicas\": 0}}'; until kubectl get pod octopus-0 2>&1 >/dev/null; do sleep 10; done"]
+        command: ["/bin/sh","-c", "kubectl patch statefulset octopus -p '{\"spec\": {\"replicas\": 0}}'; while kubectl get pod octopus-0 2>&1 >/dev/null; echo \"sleeping...\"; do sleep 10; done"]
