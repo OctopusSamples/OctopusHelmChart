@@ -22,6 +22,26 @@ helm repo update
 helm install octopus octopus/octopusdeploy --set octopus.licenseKeyBase64=<your Octopus license key base64 encoded> --set octopus.acceptEula=Y --set mssql-linux.acceptEula.value=Y --set octopus.masterKey=YOUR_GENERATED_KEY
 ```
 
+# Typical example of values
+
+```
+octopus:
+  image: octopusdeploy/octopusdeploy:2020.5.266
+  username: admin
+  password: Password01!
+  licenseKeyBase64: base 64 encoded license file goes here
+  masterKey: build me with 'openssl rand 16 | base64'
+  acceptEula: !!str "Y"
+  replicaCount: 3
+  storageClassName: "azurefile"
+  pollingTenatcles:
+    exposeServices: true
+mssql-linux:
+  acceptEula:
+    value: !!str "Y"
+    
+```
+
 # Deploying
 
 The chart can be built and published with the script `publish-chart.ps1`. The commands it uses are shown below.
