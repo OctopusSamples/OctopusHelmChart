@@ -17,7 +17,7 @@ metadata:
     helm.sh/hook-delete-policy: before-hook-creation
     helm.sh/hook-weight: "-9"
 rules:
-  - apiGroups: ["apps/v1", "apps"]
+  - apiGroups: ["apps/v1", "apps", ""]
     resources: ["statefulsets", "pods"]
     verbs: ["patch", "get", "list"]
 ---
