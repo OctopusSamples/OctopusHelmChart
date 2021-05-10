@@ -18,7 +18,7 @@ metadata:
     helm.sh/hook-weight: "-9"
 rules:
   - apiGroups: ["apps/v1", "apps"]
-    resources: ["statefulsets"]
+    resources: ["statefulsets", "pods"]
     verbs: ["patch", "get", "list"]
 ---
 kind: RoleBinding
