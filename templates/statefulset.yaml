@@ -112,7 +112,8 @@ spec:
                   name: octopus-secrets
                   key: masterKey
           {{- if not .Values.octopus.enableDockerInDocker }}
-            - DISABLE_DIND = !!str "Y"
+            - name: DISABLE_DIND
+              value: !!str "Y"
           {{- end }}
           ports:
             - containerPort: 8080
@@ -174,6 +175,11 @@ spec:
         name: server-logs-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
+        {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+        storageClassName: ""
+        {{- else if .Values.octopus.storageClassName }}
+        storageClassName: "{{ .Values.octopus.storageClassName }}"
+        {{- end }}
         resources:
           requests:
             storage: {{.Values.octopus.logVolumeSize}}
