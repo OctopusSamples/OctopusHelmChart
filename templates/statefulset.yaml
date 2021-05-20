@@ -1,8 +1,14 @@
 apiVersion: v1
 data:
+  {{- if .Values.octopus.username }}
   adminUsername: {{.Values.octopus.username | b64enc}}
+  {{- end}}
+  {{- if .Values.octopus.password }}
   adminPassword: {{.Values.octopus.password | b64enc}}
+  {{- end}}
+  {{- if .Values.octopus.licenseKeyBase64 }}
   licenseKey: {{.Values.octopus.licenseKeyBase64 | b64enc}}
+  {{- end}}
   masterKey: {{.Values.octopus.masterKey | b64enc}}
   dbConnString: {{ tpl .Values.octopus.connectionString . | b64enc}}
 kind: Secret
@@ -87,18 +93,23 @@ spec:
                 secretKeyRef:
                   name: octopus-secrets
                   key: dbConnString
+            {{- if .Values.octopus.username }}
             - name: ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: octopus-secrets
                   key: adminUsername
+            {{- end}}
+            {{- if .Values.octopus.password }}
             - name: ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: octopus-secrets
                   key: adminPassword
+            {{- end}}
             - name: ADMIN_EMAIL
               value: {{.Values.octopus.email}}
+            {{- if .Values.octopus.licenseKeyBase64 }}
             - name: OCTOPUS_SERVER_BASE64_LICENSE
               # Your license key goes here. When using more than one node, a HA license is required.
               # Without a HA license, the stateful set can have a replica count of 1.
@@ -106,6 +117,7 @@ spec:
                 secretKeyRef:
                   name: octopus-secrets
                   key: licenseKey
+            {{- end}}
             - name: MASTER_KEY
               valueFrom:
                 secretKeyRef:
@@ -174,6 +186,7 @@ spec:
         name: server-logs-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "{{ .Values.octopus.storageClassName }}"
         resources:
           requests:
             storage: {{.Values.octopus.logVolumeSize}}
