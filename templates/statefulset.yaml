@@ -186,7 +186,11 @@ spec:
         name: server-logs-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
+        {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+        storageClassName: ""
+        {{- else if .Values.octopus.storageClassName }}
         storageClassName: "{{ .Values.octopus.storageClassName }}"
+        {{- end }}
         resources:
           requests:
             storage: {{.Values.octopus.logVolumeSize}}
