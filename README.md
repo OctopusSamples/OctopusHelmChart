@@ -78,3 +78,7 @@ The bucket can be found at https://s3.console.aws.amazon.com/s3/buckets/octopus-
 Create a new release at https://github.com/OctopusSamples/OctopusHelmChart/releases/new.
 
 Run the deployment at https://deploy.octopushq.com/app#/Spaces-542/projects/octopus-server-helm-chart/deployments.
+
+# Support
+
+This repository is licensed under the [Apache 2.0](license) and provided as-is with no support.
