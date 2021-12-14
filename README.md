@@ -34,7 +34,7 @@ octopus:
   acceptEula: !!str "Y"
   replicaCount: 3
   storageClassName: "azurefile"
-  pollingTenatcles:
+  pollingTentacles:
     exposeServices: true
 mssql-linux:
   acceptEula:

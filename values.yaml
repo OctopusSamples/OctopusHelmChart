@@ -63,7 +63,7 @@ octopus:
   # The type of service created to expose the Octopus nodes. Options are ClusterIP and NodePort.
   serviceType: LoadBalancer
   # Settings concerning polling tentacles across the HA nodes
-  pollingTenatcles:
+  pollingTentacles:
     # If true, a load balancer is created for each Octopus instance for polling tentacles to point to.
     # This is because polling tentacles need to query each Octopus node to get new tasks.
     # The docs at https://octopus.com/docs/administration/high-availability/configuring-octopus-for-high-availability

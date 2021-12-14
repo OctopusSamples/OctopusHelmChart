@@ -18,7 +18,7 @@ spec:
   {{- end }}
   selector:
     app: octopus
-{{- if .Values.octopus.pollingTenatcles.exposeServices }}
+{{- if .Values.octopus.pollingTentacles.exposeServices }}
 {{- $root := . -}}
 {{- range untilStep 0 (.Values.octopus.replicaCount | int) 1 }}
 ---
